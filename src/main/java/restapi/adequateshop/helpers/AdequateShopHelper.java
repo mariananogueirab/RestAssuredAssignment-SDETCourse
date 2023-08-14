@@ -7,7 +7,8 @@ import io.restassured.response.Response;
 import restapi.adequateshop.models.*;
 import restapi.adequateshop.utils.ConfigManager;
 
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.baseURI;
+import static io.restassured.RestAssured.given;
 import static restapi.adequateshop.constants.Endpoints.*;
 
 public class AdequateShopHelper {
@@ -18,7 +19,7 @@ public class AdequateShopHelper {
         baseURI = BASE_URI;
     }
 
-    public ResponseBody postUserRegistration(UserRegistration userRegistration) throws JsonProcessingException {
+    public ResponseBody userRegistration(UserRegistration userRegistration) throws JsonProcessingException {
         String userRegistrationString = objectMapper.writeValueAsString(userRegistration);
         return given().log().all()
                 .contentType(ContentType.JSON)
@@ -29,7 +30,7 @@ public class AdequateShopHelper {
                 .getBody().as(ResponseBody.class);
     }
 
-    public ResponseBody postLogin(LoginInformation loginInformation) throws JsonProcessingException {
+    public ResponseBody login(LoginInformation loginInformation) throws JsonProcessingException {
         String loginInformationString = objectMapper.writeValueAsString(loginInformation);
         return given().log().all()
                 .contentType(ContentType.JSON)
@@ -64,8 +65,17 @@ public class AdequateShopHelper {
                 .auth().oauth2(token)
                 .when()
                 .pathParam("id", id)
-                .get(GET_USER_BY_ID_ENDPOINT)
+                .get(USER_BY_ID_ENDPOINT)
                 .getBody().as(User.class);
+    }
+
+    public Response updateUserById(String token, String id) {
+        return given().log().all()
+                .contentType(ContentType.JSON)
+                .auth().oauth2(token)
+                .when()
+                .pathParam("id", id)
+                .put(USER_BY_ID_ENDPOINT);
     }
 
 }
