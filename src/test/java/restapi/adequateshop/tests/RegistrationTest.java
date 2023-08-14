@@ -28,7 +28,7 @@ public class RegistrationTest {
 
     @BeforeMethod
     public void setUpUserToRegistration() {
-        String id = Integer.toString(gerador.nextInt(99));
+        String id = Integer.toString(gerador.nextInt(9999));
         String name = ConfigManager.getInstance().getString("name");
         String email = ConfigManager.getInstance().getString("email");
         int password = Integer.parseInt(ConfigManager.getInstance().getString("password"));
