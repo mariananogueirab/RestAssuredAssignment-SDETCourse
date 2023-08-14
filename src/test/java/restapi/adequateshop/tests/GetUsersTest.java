@@ -33,6 +33,7 @@ public class GetUsersTest {
         int page = 1;
 
         Users users = adequateShopHelper.getAllUsers(responseBody.getData().getToken(), Integer.toString(page));
+        System.out.println(users);
 
         assertEquals(page, users.getPage());
         assertEquals(users.getPer_page(), users.getData().size());
@@ -40,20 +41,19 @@ public class GetUsersTest {
 
     @Test
     public void getAllUsers_WithoutAuthTest() {
-        int page = 1;
+        String page = ConfigManager.getInstance().getString("page");
 
-        Response response = adequateShopHelper.getAllUsers_WithoutAuth(Integer.toString(page));
+        Response response = adequateShopHelper.getAllUsers_WithoutAuth(page);
         assertEquals(MISSING_TOKEN, response.asString());
     }
 
     @Test
     public void getUserByIdTest() throws JsonProcessingException {
         ResponseBody responseBody = adequateShopHelper.postLogin(loginInformation);
-        int id = 258817;
+        String id = ConfigManager.getInstance().getString("userId");
 
-        User user = adequateShopHelper.getUserById(responseBody.getData().getToken(), Integer.toString(id));
-
-        assertEquals(id, user.getId());
+        User user = adequateShopHelper.getUserById(responseBody.getData().getToken(), id);
+        assertEquals(id, Integer.toString(user.getId()));
     }
 
 }
