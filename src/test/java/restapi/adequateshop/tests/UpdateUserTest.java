@@ -11,6 +11,7 @@ import restapi.adequateshop.models.ResponseBody;
 import restapi.adequateshop.utils.ConfigManager;
 
 import static io.restassured.path.xml.XmlPath.CompatibilityMode.HTML;
+import static org.apache.http.HttpStatus.SC_METHOD_NOT_ALLOWED;
 import static org.testng.Assert.assertEquals;
 import static restapi.adequateshop.constants.Constants.HTTP_VERB_NOT_ALLOWED;
 
@@ -35,5 +36,6 @@ public class UpdateUserTest {
 
         XmlPath htmlPath = new XmlPath(HTML, response.getBody().asString());
         assertEquals(htmlPath.getString("html.head.title"), HTTP_VERB_NOT_ALLOWED);
+        assertEquals(SC_METHOD_NOT_ALLOWED, response.statusCode());
     }
 }

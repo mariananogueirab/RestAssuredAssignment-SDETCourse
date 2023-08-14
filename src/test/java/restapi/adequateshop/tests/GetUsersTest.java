@@ -11,6 +11,7 @@ import restapi.adequateshop.models.User;
 import restapi.adequateshop.models.Users;
 import restapi.adequateshop.utils.ConfigManager;
 
+import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 import static org.testng.Assert.assertEquals;
 import static restapi.adequateshop.constants.Constants.MISSING_TOKEN;
 
@@ -32,7 +33,6 @@ public class GetUsersTest {
         int page = 1;
 
         Users users = adequateShopHelper.getAllUsers(responseBody.getData().getToken(), Integer.toString(page));
-        System.out.println(users);
 
         assertEquals(page, users.getPage());
         assertEquals(users.getPer_page(), users.getData().size());
@@ -44,6 +44,7 @@ public class GetUsersTest {
 
         Response response = adequateShopHelper.getAllUsers_WithoutAuth(page);
         assertEquals(MISSING_TOKEN, response.asString());
+        assertEquals(SC_UNAUTHORIZED, response.statusCode());
     }
 
     @Test
