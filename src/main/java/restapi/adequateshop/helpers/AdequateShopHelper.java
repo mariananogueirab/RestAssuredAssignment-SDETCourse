@@ -78,4 +78,13 @@ public class AdequateShopHelper {
                 .put(USER_BY_ID_ENDPOINT);
     }
 
+    public Response deleteUserById(String token, String id) {
+        return given().log().all()
+                .contentType(ContentType.JSON)
+                .auth().oauth2(token)
+                .when()
+                .pathParam("id", id)
+                .delete(USER_BY_ID_ENDPOINT);
+    }
+
 }
