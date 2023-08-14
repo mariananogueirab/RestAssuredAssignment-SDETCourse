@@ -40,7 +40,7 @@ public class RegistrationTest {
     @Test
     public void userRegistrationTest() throws JsonProcessingException {
 
-        ResponseBody responseBody = adequateShopHelper.postUserRegistration(userRegistration);
+        ResponseBody responseBody = adequateShopHelper.userRegistration(userRegistration);
         System.out.println(responseBody.toString());
 
         assertEquals(0, responseBody.getCode());
@@ -51,9 +51,9 @@ public class RegistrationTest {
 
     @Test
     public void userRegistration_AlreadyExistsTest() throws JsonProcessingException {
-        adequateShopHelper.postUserRegistration(userRegistration);
+        adequateShopHelper.userRegistration(userRegistration);
 
-        ResponseBody responseBody = adequateShopHelper.postUserRegistration(userRegistration);
+        ResponseBody responseBody = adequateShopHelper.userRegistration(userRegistration);
         System.out.println(responseBody.toString());
 
         assertEquals(1, responseBody.getCode());

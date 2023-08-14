@@ -6,13 +6,11 @@ import org.testng.annotations.Test;
 import restapi.adequateshop.helpers.AdequateShopHelper;
 import restapi.adequateshop.models.LoginInformation;
 import restapi.adequateshop.models.ResponseBody;
-import restapi.adequateshop.models.UserRegistration;
 import restapi.adequateshop.utils.ConfigManager;
 
-import java.util.Random;
-
 import static org.testng.Assert.assertEquals;
-import static restapi.adequateshop.constants.Constants.*;
+import static restapi.adequateshop.constants.Constants.INVALID_LOGIN_MESSAGE;
+import static restapi.adequateshop.constants.Constants.SUCCESS_MESSAGE;
 
 public class LoginTest {
     private AdequateShopHelper adequateShopHelper;
@@ -29,7 +27,7 @@ public class LoginTest {
         loginInformation.setEmail(ConfigManager.getInstance().getString("email"));
         loginInformation.setPassword(Integer.parseInt(ConfigManager.getInstance().getString("password")));
 
-        ResponseBody responseBody = adequateShopHelper.postLogin(loginInformation);
+        ResponseBody responseBody = adequateShopHelper.login(loginInformation);
 
         assertEquals(0, responseBody.getCode());
         assertEquals(SUCCESS_MESSAGE, responseBody.getMessage());
@@ -43,7 +41,7 @@ public class LoginTest {
         invalidLoginInformation.setEmail(ConfigManager.getInstance().getString("invalidEmail"));
         invalidLoginInformation.setPassword(Integer.parseInt(ConfigManager.getInstance().getString("password")));
 
-        ResponseBody responseBody = adequateShopHelper.postLogin(invalidLoginInformation);
+        ResponseBody responseBody = adequateShopHelper.login(invalidLoginInformation);
         System.out.println(responseBody.toString());
 
         assertEquals(1, responseBody.getCode());

@@ -5,18 +5,17 @@ import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import restapi.adequateshop.helpers.AdequateShopHelper;
-import restapi.adequateshop.models.*;
+import restapi.adequateshop.models.LoginInformation;
+import restapi.adequateshop.models.ResponseBody;
+import restapi.adequateshop.models.User;
+import restapi.adequateshop.models.Users;
 import restapi.adequateshop.utils.ConfigManager;
+
 import static org.testng.Assert.assertEquals;
 import static restapi.adequateshop.constants.Constants.MISSING_TOKEN;
 
-
-import java.util.Random;
-
 public class GetUsersTest {
     private AdequateShopHelper adequateShopHelper;
-    public Random gerador = new Random();
-    UserRegistration userRegistration = new UserRegistration();
     LoginInformation loginInformation = new LoginInformation();
 
     @BeforeClass
@@ -29,7 +28,7 @@ public class GetUsersTest {
 
     @Test
     public void getAllUsersTest() throws JsonProcessingException {
-        ResponseBody responseBody = adequateShopHelper.postLogin(loginInformation);
+        ResponseBody responseBody = adequateShopHelper.login(loginInformation);
         int page = 1;
 
         Users users = adequateShopHelper.getAllUsers(responseBody.getData().getToken(), Integer.toString(page));
@@ -49,7 +48,7 @@ public class GetUsersTest {
 
     @Test
     public void getUserByIdTest() throws JsonProcessingException {
-        ResponseBody responseBody = adequateShopHelper.postLogin(loginInformation);
+        ResponseBody responseBody = adequateShopHelper.login(loginInformation);
         String id = ConfigManager.getInstance().getString("userId");
 
         User user = adequateShopHelper.getUserById(responseBody.getData().getToken(), id);
