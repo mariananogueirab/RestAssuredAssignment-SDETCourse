@@ -24,7 +24,6 @@ public class RegistrationTest {
     @BeforeClass
     public void init() {
         adequateShopHelper = new AdequateShopHelper();
-
     }
 
     @BeforeMethod
@@ -38,8 +37,8 @@ public class RegistrationTest {
         userRegistration.setPassword(password);
     }
 
-    @Test()
-    public void postUserRegistration() throws JsonProcessingException {
+    @Test
+    public void userRegistrationTest() throws JsonProcessingException {
 
         ResponseBody responseBody = adequateShopHelper.postUserRegistration(userRegistration);
         System.out.println(responseBody.toString());
@@ -50,8 +49,8 @@ public class RegistrationTest {
         assertEquals(userRegistration.getEmail(), responseBody.getData().getEmail());
     }
 
-    @Test()
-    public void postUserRegistration_AlreadyExists() throws JsonProcessingException {
+    @Test
+    public void userRegistration_AlreadyExistsTest() throws JsonProcessingException {
         adequateShopHelper.postUserRegistration(userRegistration);
 
         ResponseBody responseBody = adequateShopHelper.postUserRegistration(userRegistration);
